@@ -1,20 +1,28 @@
 package hamd.in.journalingApp.Entity;
 
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import com.mongodb.lang.NonNull;
 
 import lombok.Data;
 
-@Document(collection = "journal_entries")
+@Document(collection = "users")
 @Data
-public class JournalEntry {
+public class User {
     @Id
     private ObjectId id;
-    private String title;
-    private String content;
-    private LocalDateTime date;
+    @Indexed(unique = true)
+    @NonNull
+    private String username;
+    @NonNull
+    private String password;
+
+    private List<JournalEntry> journal_entries = new ArrayList<>();
+
 }
