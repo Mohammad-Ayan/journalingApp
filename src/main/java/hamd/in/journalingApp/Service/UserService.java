@@ -7,7 +7,7 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import hamd.in.journalingApp.Entity.JournalEntry;
+// import hamd.in.journalingApp.Entity.JournalEntry;
 import hamd.in.journalingApp.Entity.User;
 import hamd.in.journalingApp.repository.UserRepo;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +20,7 @@ public class UserService {
     private UserRepo userRepo;
 
     public void saveEntry(User user) {
-       
+       userRepo.save(user);
     }
 
     public List<User> getAll() {
@@ -33,6 +33,10 @@ public class UserService {
 
     public void deleteJournalEntryById(ObjectId id) {
         userRepo.deleteById(id);
+    }
+
+    public User findByUserName(String userName) {
+        return userRepo.findByUserName(userName);
     }
 }
 

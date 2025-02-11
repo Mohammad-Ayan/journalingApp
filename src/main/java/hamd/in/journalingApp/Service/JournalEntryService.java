@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import hamd.in.journalingApp.Entity.JournalEntry;
+import hamd.in.journalingApp.Entity.User;
 import hamd.in.journalingApp.repository.JournalEntryRepo;
 import lombok.extern.slf4j.Slf4j;
 
@@ -19,15 +20,16 @@ public class JournalEntryService {
     @Autowired
     private JournalEntryRepo journalEntryRepo;
 
-    public void saveEntry(JournalEntry journalEntry) {
-        try {
-            journalEntry.setDate(LocalDateTime.now());
-            journalEntryRepo.save(journalEntry);
+    @Autowired
+    private UserService userService;
 
-        } catch (Exception e) {
-            log.error("Exception", e);
+    public void saveEntry(JournalEntry journalEntry, String userName) {
+            User user = userService.findByUserName(userName);
+            journalEntry.setDate(LocalDateTime.now());
+            JournalEntry saved = journalEntryRepo.save(journalEntry);
+            user.getJournal_entries().add(saved);
+            userService.saveEntry(user);
         }
-    }
 
     public List<JournalEntry> getAll() {
         return journalEntryRepo.findAll();
@@ -42,4 +44,4 @@ public class JournalEntryService {
     }
 }
 
-// controller ---> service ---> repository
+// controller ---> service ---> repository 

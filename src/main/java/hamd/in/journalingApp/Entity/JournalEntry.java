@@ -1,7 +1,7 @@
 package hamd.in.journalingApp.Entity;
 
 import java.time.LocalDateTime;
-import java.util.Date;
+// import java.util.Date;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
